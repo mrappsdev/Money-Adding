@@ -23,11 +23,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText inputEmail, inputPassword,refferel;
+   
+    private EditText inputEmail, inputPassword,refferellink,name,phone;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference,dbRefer;
 
     private FirebaseUser firebaseUser;
 
@@ -46,8 +47,10 @@ public class SignupActivity extends AppCompatActivity {
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
         inputEmail = (EditText) findViewById(R.id.email);
-        refferel = (EditText) findViewById(R.id.refferel);
+        refferellink = (EditText) findViewById(R.id.parentUser);
         inputPassword = (EditText) findViewById(R.id.password);
+        name = (EditText) findViewById(R.id.name);
+        phone = (EditText) findViewById(R.id.phone);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
@@ -109,6 +112,7 @@ public class SignupActivity extends AppCompatActivity {
                                 } else {
                                     startActivity(new Intent(SignupActivity.this, MainActivity.class));
                                      saverefferel();
+                                    //setRefferel();
                                     finish();
                                 }
                             }
@@ -119,23 +123,70 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void saverefferel() {
-        final String userRefferel = refferel.getText().toString().trim();
+
+        final String userRefferel = refferellink.getText().toString().trim();
+        final String userName = name.getText().toString().trim();
+        final String userPhone = phone.getText().toString().trim();
+        final String userPassword = inputPassword.getText().toString().trim();
+        final String emailid = inputEmail.getText().toString().trim();
+
         databaseReference = FirebaseDatabase.getInstance().getReference("User");
+        dbRefer = FirebaseDatabase.getInstance().getReference("Referel");
+
         //get current user
-       // final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        //firebaseUser.getEmail();
+
+        final String accStatus = "Pending";
 
         try {
-            Profile_Model myProfile = new Profile_Model(userRefferel);
-            String userKey = firebaseUser.getUid();
+            UserModel myProfile = new UserModel(userName,userPhone,userPassword,accStatus);
+
+            UserModel myRef = new UserModel(userRefferel);
+            final String userKey = firebaseUser.getUid();
+
             Log.d("tuser",userKey);
 
-            // String uploadKey = databaseReference.push().getKey();
-            //databaseReference.child(userKey).child(uploadKey).child("timestamp").setValue(ServerValue.TIMESTAMP);
             databaseReference.child(userKey).setValue(myProfile);
+
+            dbRefer.child(userKey).setValue(myRef);
+
             Toast.makeText(SignupActivity.this, "Refferel Add Successfully", Toast.LENGTH_SHORT).show();
 
+            final  String key = dbRefer.push().getKey();
+            //////////////
+            dbRefer.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                    Boolean found;
+                    String search = userRefferel;
+                    String thisEmail = emailid;
+                    String userKey = firebaseUser.getUid();
+
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        String parent = ds.getKey();
+
+                            String movieName = ds.child("refferel").getValue(String.class);
+
+                           if(found = movieName.contains(search)) {
+                               UserModel myRef = new UserModel(emailid);
+                               dbRefer.child(parent).child("Client").child(key).setValue(myRef);
+                           }else {
+                               Log.d("Faild", movieName + " / " + found);
+                             
+
+                           }
+
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+                //////////
         }
         catch (Exception e){
             Toast.makeText(this, "Profile Update Field.", Toast.LENGTH_SHORT).show();
