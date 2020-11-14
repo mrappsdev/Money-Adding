@@ -2,29 +2,51 @@ package com.mrsoftbd.moneyadding;
 
 public class Profile_Model {
 
+    
     String name;
     String phone;
-    String refferel;
+    String parentUser;
+    String accStatus;
+    String password;
 
     Profile_Model(){
 
     }
 
-    public Profile_Model(String refferel) {
-        this.refferel = refferel;
+    public Profile_Model(String parentUser){
+        this.parentUser = parentUser;
     }
 
-    public Profile_Model(String name, String phone) {
+    public Profile_Model(String name, String phone,String password, String accStatus) {
         this.name = name;
         this.phone = phone;
+        this.password = password;
+        this.accStatus = accStatus;
+
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getAccStatus() {
+        return accStatus;
+    }
+
+    public void setAccStatus(String accStatus) {
+        this.accStatus = accStatus;
     }
 
     public String getRefferel() {
-        return refferel;
+        return parentUser;
     }
 
-    public void setRefferel(String refferel) {
-        this.refferel = refferel;
+    public void setRefferel(String parentUser) {
+        this.parentUser = parentUser;
     }
 
     public String getName() {
@@ -43,3 +65,4 @@ public class Profile_Model {
         this.phone = phone;
     }
 }
+
