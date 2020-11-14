@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "865456327255",
-    "firebase_url": "https://moneyadding-610a4.firebaseio.com",
-    "project_id": "moneyadding-610a4",
-    "storage_bucket": "moneyadding-610a4.appspot.com"
+    "project_number": "80342999751",
+    "firebase_url": "https://money-adding.firebaseio.com",
+    "project_id": "money-adding",
+    "storage_bucket": "money-adding.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:865456327255:android:e4b9521fcf256f3301b112",
+        "mobilesdk_app_id": "1:80342999751:android:3fbd1b42aca010d19f14e2",
         "android_client_info": {
           "package_name": "com.mrsoftbd.moneyadding"
         }
       },
       "oauth_client": [
         {
-          "client_id": "865456327255-e4qal58ia5s5tfl6piho1ghnh955n7av.apps.googleusercontent.com",
+          "client_id": "80342999751-q3b1jat8nvmo5b5iiio0cnea2iinaftq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDuEUF4fnWdqr8K8F5v-ebjTff5q09uk50"
+          "current_key": "AIzaSyB7RA6ylqpAfIQ3P4ztPBk2NWgxo5JokKM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "865456327255-e4qal58ia5s5tfl6piho1ghnh955n7av.apps.googleusercontent.com",
+              "client_id": "80342999751-q3b1jat8nvmo5b5iiio0cnea2iinaftq.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
